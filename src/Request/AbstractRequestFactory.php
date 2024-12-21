@@ -13,8 +13,8 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 abstract class AbstractRequestFactory
 {
-    const PATH = '';
-    const METHOD = 'POST';
+    public const PATH   = '';
+    public const METHOD = 'POST';
 
     public function __construct(
         private readonly RequestFactoryInterface $psrRequestFactory,
@@ -24,7 +24,7 @@ abstract class AbstractRequestFactory
     }
 
     /** @return AbstractRequestModifier[] */
-    protected abstract function getModifiers(): array;
+    abstract protected function getModifiers(): array;
 
     /**
      * Create a request with common logic.
@@ -35,7 +35,7 @@ abstract class AbstractRequestFactory
      */
     protected function createRequest(?RequestDataInterface $requestData = null): RequestInterface
     {
-        $url = $this->environment->getBaseUrl() . $this->getPath($requestData);
+        $url    = $this->environment->getBaseUrl() . $this->getPath($requestData);
         $method = $this->getMethod();
 
         $request = $this->psrRequestFactory->createRequest($method, $url);
