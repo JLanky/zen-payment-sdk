@@ -6,7 +6,6 @@ namespace JLanky\ZenPayments\Modifier;
 
 class RequestIdRequestModifier extends AbstractRequestModifier implements RequestModifierInterface
 {
-
     private const HEADER_NAME  = 'request-id';
 
     public function __construct(private readonly string $requestId)
