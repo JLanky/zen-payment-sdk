@@ -1,0 +1,9 @@
+/vendor/
+.env.local
+.php-cs-fixer.cache
+.php-cs-fixer.dist.php
+.phpunit.result.cache
+.idea/
+.phpunit.cache/
+composer.lock
+commands.txt
