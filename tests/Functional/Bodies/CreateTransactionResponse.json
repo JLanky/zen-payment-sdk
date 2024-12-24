@@ -1,9 +1,0 @@
-{
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-  "merchantTransactionId": "string",
-  "amount": "123.04",
-  "currency": "PLN",
-  "status": "ACCEPTED",
-  "type": "TRT_REFUND",
-  "paymentChannel": "PCL_CARD"
-}

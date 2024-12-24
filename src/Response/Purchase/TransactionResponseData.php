@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Response\CreateTransaction;
+namespace JLanky\ZenPayments\Response\Purchase;
 
 use JLanky\ZenPayments\Response\ResponseDataInterface;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
-class CreateTransactionResponseData implements ResponseDataInterface
+class TransactionResponseData implements ResponseDataInterface
 {
     public function __construct(
         private readonly string $id,
