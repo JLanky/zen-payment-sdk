@@ -7,10 +7,12 @@ namespace JLanky\ZenPayments\Service;
 use JLanky\ZenPayments\Config\Environment\AbstractEnvironment;
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
 use JLanky\ZenPayments\Dependency\PsrDependenciesInterface;
-use JLanky\ZenPayments\Request\CreateTransaction\CreateTransactionRequestData;
-use JLanky\ZenPayments\Request\CreateTransaction\CreateTransactionRequestFactory;
-use JLanky\ZenPayments\Response\CreateTransaction\CreateTransactionResponseData;
-use JLanky\ZenPayments\Response\CreateTransaction\CreateTransactionResponseFactory;
+use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestData;
+use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestFactory;
+use JLanky\ZenPayments\Request\Purchase\GetTransaction\GetTransactionRequestData;
+use JLanky\ZenPayments\Request\Purchase\GetTransaction\GetTransactionRequestFactory;
+use JLanky\ZenPayments\Response\Purchase\TransactionResponseData;
+use JLanky\ZenPayments\Response\Purchase\TransactionResponseFactory;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -28,7 +30,7 @@ class PurchaseService extends AbstractService
      * @throws JsonException
      * @throws ClientExceptionInterface
      */
-    public function createTransaction(CreateTransactionRequestData $createTransactionRequestData): CreateTransactionResponseData
+    public function createTransaction(CreateTransactionRequestData $createTransactionRequestData): TransactionResponseData
     {
         $createTransactionRequestFactory = new CreateTransactionRequestFactory(
             $this->environment,
@@ -36,12 +38,31 @@ class PurchaseService extends AbstractService
             $this->primaryDependencies,
         );
 
-        $request = $createTransactionRequestFactory->createRequest($createTransactionRequestData);
-
+        $request  = $createTransactionRequestFactory->createRequest($createTransactionRequestData);
         $response = $this->sendRequest($request);
 
-        $createTransactionResponseFactory = new CreateTransactionResponseFactory($this->primaryDependencies);
+        $transactionResponseFactory = new TransactionResponseFactory($this->primaryDependencies);
 
-        return $createTransactionResponseFactory->createResponse($response);
+        return $transactionResponseFactory->createResponse($response);
+    }
+
+    /**
+     * @throws JsonException
+     * @throws ClientExceptionInterface
+     */
+    public function getTransaction(GetTransactionRequestData $getTransactionRequestData): TransactionResponseData
+    {
+        $getTransactionRequestFactory = new GetTransactionRequestFactory(
+            $this->environment,
+            $this->psrDependencies,
+            $this->primaryDependencies,
+        );
+
+        $request  = $getTransactionRequestFactory->createRequest($getTransactionRequestData);
+        $response = $this->sendRequest($request);
+
+        $transactionResponseFactory = new TransactionResponseFactory($this->primaryDependencies);
+
+        return $transactionResponseFactory->createResponse($response);
     }
 }

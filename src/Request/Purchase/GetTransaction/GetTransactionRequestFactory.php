@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Request\CreateTransaction;
+namespace JLanky\ZenPayments\Request\Purchase\GetTransaction;
 
 use Exception;
 use JLanky\ZenPayments\Config\Environment\AbstractEnvironment;
@@ -13,8 +13,9 @@ use JLanky\ZenPayments\Modifier\BearerTokenRequestModifier;
 use JLanky\ZenPayments\Modifier\ContentTypeJsonRequestModifier;
 use JLanky\ZenPayments\Modifier\RequestIdRequestModifier;
 use JLanky\ZenPayments\Request\AbstractRequestFactory;
+use JLanky\ZenPayments\Request\RequestDataInterface;
 
-class CreateTransactionRequestFactory extends AbstractRequestFactory
+class GetTransactionRequestFactory extends AbstractRequestFactory
 {
     public function __construct(
         private readonly AbstractEnvironment          $environment,
@@ -24,7 +25,14 @@ class CreateTransactionRequestFactory extends AbstractRequestFactory
         parent::__construct($psrDependencies, $primaryDependencies, $environment);
     }
 
-    public const PATH = 'transaction';
+    public const METHOD = 'GET';
+    public const PATH   = 'transactions/%s';
+
+    /**@param GetTransactionRequestData $requestData */
+    protected function getPath(RequestDataInterface $requestData): string
+    {
+        return sprintf(static::PATH, $requestData->getTransactionId());
+    }
 
     /**
      * @return AbstractRequestModifier[]
