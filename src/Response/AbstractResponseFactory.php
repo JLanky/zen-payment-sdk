@@ -9,7 +9,7 @@ use RuntimeException;
 
 abstract class AbstractResponseFactory
 {
-    protected abstract function createResponse(ResponseInterface $response): ResponseDataInterface;
+    abstract protected function createResponse(ResponseInterface $response): ResponseDataInterface;
 
     protected function handleResponse(ResponseInterface $response): array
     {
@@ -31,7 +31,7 @@ abstract class AbstractResponseFactory
             ));
         }
 
-        $body = $response->getBody()->getContents();
+        $body        = $response->getBody()->getContents();
         $decodedBody = json_decode($body, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {

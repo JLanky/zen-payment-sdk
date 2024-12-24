@@ -11,37 +11,28 @@ class AccountInfo
     public function __construct(
         #[Assert\NotBlank]
         private readonly string $chAccAgeInd,
-
         #[Assert\NotBlank]
         private readonly string $chAccChange,
-
         #[Assert\NotBlank]
         private readonly string $chAccChangeInd,
-
         #[Assert\NotBlank]
         private readonly string $chAccDate,
-
         #[Assert\NotBlank]
         private readonly string $chAccPwChange,
-
         #[Assert\NotBlank]
         private readonly string $chAccPwChangeInd,
-
         #[Assert\NotBlank]
         private readonly string $nbPurchaseAccount,
-
         #[Assert\NotBlank]
         private readonly string $paymentAccAge,
-
         #[Assert\NotBlank]
         private readonly string $paymentAccInd,
-
         #[Assert\NotBlank]
         private readonly string $txnActivityDay,
-
         #[Assert\NotBlank]
         private readonly string $txnActivityYear
-    ) {}
+    ) {
+    }
 
     public function getChAccAgeInd(): string
     {

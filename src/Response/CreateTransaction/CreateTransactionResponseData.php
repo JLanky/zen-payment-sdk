@@ -19,8 +19,7 @@ class CreateTransactionResponseData implements ResponseDataInterface
         private readonly string $type,
         #[SerializedName('paymentChannel')]
         private readonly string $paymentChannel
-    )
-    {
+    ) {
     }
 
     public function getId(): string

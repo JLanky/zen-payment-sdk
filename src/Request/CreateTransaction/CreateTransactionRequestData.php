@@ -14,19 +14,14 @@ class CreateTransactionRequestData implements RequestDataInterface
     public function __construct(
         #[Assert\NotBlank]
         private readonly Authorization $authorization,
-
         #[Assert\NotBlank]
         private readonly Source $source,
-
         #[Assert\NotBlank]
         private readonly string $merchantTransactionId,
-
         #[Assert\NotBlank]
         private readonly string $paymentChannel,
-
         #[Assert\NotBlank]
         private readonly string $amount,
-
         #[Assert\NotBlank]
         private readonly string $currency
     ) {

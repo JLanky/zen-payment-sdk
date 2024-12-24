@@ -14,15 +14,14 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 abstract class AbstractRequestFactory
 {
-    public const PATH = '';
+    public const PATH   = '';
     public const METHOD = 'POST';
 
     public function __construct(
         private readonly PsrDependenciesInterface     $psrDependencies,
         private readonly PrimaryDependenciesInterface $primaryDependencies,
         private readonly AbstractEnvironment          $environment,
-    )
-    {
+    ) {
     }
 
     /** @return AbstractRequestModifier[] */
@@ -49,7 +48,7 @@ abstract class AbstractRequestFactory
     {
         $this->validateRequestData($requestData);
 
-        $url = $this->environment->getBaseUrl() . $this->getPath($requestData);
+        $url    = $this->environment->getBaseUrl() . $this->getPath($requestData);
         $method = $this->getMethod();
 
         $request = $this->psrDependencies
