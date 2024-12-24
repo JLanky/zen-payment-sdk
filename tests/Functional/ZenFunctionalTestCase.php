@@ -53,7 +53,7 @@ class ZenFunctionalTestCase extends TestCase
         return new PrimaryDependencies($validator, $serializer, new HashHelper());
     }
 
-    protected function getZenService(string $bodyName): PurchaseService
+    protected function getPurchaseService(string $bodyName): PurchaseService
     {
         return new PurchaseService(
             new Sandbox(
