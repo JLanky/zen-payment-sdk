@@ -11,6 +11,7 @@ use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionReque
 use JLanky\ZenPayments\Tests\Functional\Enum\ResponseBodyEnum;
 use JLanky\ZenPayments\Tests\Functional\ZenFunctionalTestCase;
 use JLanky\ZenPayments\ValueObject\Authorization;
+use JLanky\ZenPayments\ValueObject\Customer;
 use JLanky\ZenPayments\ValueObject\Source;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -37,6 +38,7 @@ class CreateTransactionTest extends ZenFunctionalTestCase
         $this->assertSame(ResponseBodyEnum::StatusAccepted->value, $responseData->getStatus());
         $this->assertSame(ResponseBodyEnum::TypeTrtRefund->value, $responseData->getType());
         $this->assertSame(ResponseBodyEnum::PaymentChannel->value, $responseData->getPaymentChannel());
+        $this->assertSame(ResponseBodyEnum::CustomerEmail->value, $responseData->getPaymentChannel());
     }
 
     public static function getTestData(): array
@@ -45,12 +47,14 @@ class CreateTransactionTest extends ZenFunctionalTestCase
 
         $authorization = new Authorization(
             amount: (string) $faker->randomFloat(2, 10, 1000),
-            currency: 'USD'
+            currency: 'EUR'
         );
 
         $source = new Source(
             channel: 'TEST_CHANNEL'
         );
+
+        $customer = new Customer(email: $faker->email);
 
         $createTransactionRequestData = new CreateTransactionRequestData(
             authorization: $authorization,
@@ -58,7 +62,8 @@ class CreateTransactionTest extends ZenFunctionalTestCase
             merchantTransactionId: $faker->uuid,
             paymentChannel: 'PCL_CARD',
             amount: (string) $faker->randomFloat(2, 10, 1000),
-            currency: 'USD'
+            currency: 'EUR',
+            customer: $customer
         );
 
         return [

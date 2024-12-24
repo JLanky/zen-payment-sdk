@@ -10,26 +10,26 @@ final class Customer
 {
     public function __construct(
         #[Assert\NotBlank]
-        private readonly string $id,
-        #[Assert\NotBlank]
-        private readonly string $userId,
-        #[Assert\NotBlank]
-        private readonly int $tenantId,
-        #[Assert\NotBlank]
-        private readonly string $firstName,
-        #[Assert\NotBlank]
-        private readonly string $lastName,
-        #[Assert\NotBlank]
         #[Assert\Email]
-        private readonly string $email,
+        private readonly string  $email,
         #[Assert\NotBlank]
-        private readonly string $phone,
+        private readonly ?string $id = null,
         #[Assert\NotBlank]
-        private readonly string $information,
+        private readonly ?string  $userId = null,
         #[Assert\NotBlank]
-        private readonly string $accountId,
+        private readonly ?int     $tenantId = null,
         #[Assert\NotBlank]
-        private readonly string $ip
+        private readonly ?string  $firstName = null,
+        #[Assert\NotBlank]
+        private readonly ?string  $lastName = null,
+        #[Assert\NotBlank]
+        private readonly ?string  $phone = null,
+        #[Assert\NotBlank]
+        private readonly ?string $information = null,
+        #[Assert\NotBlank]
+        private readonly ?string $accountId = null,
+        #[Assert\NotBlank]
+        private readonly ?string $ip = null
     ) {
     }
 
