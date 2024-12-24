@@ -6,5 +6,4 @@ namespace JLanky\ZenPayments\Request;
 
 interface RequestDataInterface
 {
-    public function toArray(): array;
 }

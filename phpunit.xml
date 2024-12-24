@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.2/phpunit.xsd"
+         backupGlobals="false"
+         bootstrap="tests/bootstrap.php"
+         cacheResultFile=".phpunit.cache/test-results"
+         executionOrder="depends,defects"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         defaultTestSuite="default"
+         verbose="true"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="intl.default_locale" value="en" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="memory_limit" value="-1" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Integration">
+            <directory>./tests/Integration</directory>
+        </testsuite>
+        <testsuite name="Functional">
+            <directory>./tests/Functional</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage cacheDirectory=".phpunit.cache/code-coverage"
+              processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+</phpunit>
