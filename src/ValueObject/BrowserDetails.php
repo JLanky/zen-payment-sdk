@@ -11,34 +11,26 @@ class BrowserDetails
     public function __construct(
         #[Assert\NotBlank]
         private readonly string $acceptHeader,
-
         #[Assert\NotBlank]
         private readonly string $colorDepth,
-
         #[Assert\NotBlank]
         private readonly bool $javaEnabled,
-
         #[Assert\NotBlank]
         private readonly bool $javascriptEnabled,
-
         #[Assert\NotBlank]
         private readonly string $lang,
-
         #[Assert\NotBlank]
         private readonly string $screenHeight,
-
         #[Assert\NotBlank]
         private readonly string $screenWidth,
-
         #[Assert\NotBlank]
         private readonly string $timezone,
-
         #[Assert\NotBlank]
         private readonly string $windowSize,
-
         #[Assert\NotBlank]
         private readonly string $userAgent
-    ) {}
+    ) {
+    }
 
     public function getAcceptHeader(): string
     {
