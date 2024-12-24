@@ -20,8 +20,7 @@ class PurchaseService extends AbstractService
         private readonly AbstractEnvironment          $environment,
         private readonly PsrDependenciesInterface     $psrDependencies,
         private readonly PrimaryDependenciesInterface $primaryDependencies,
-    )
-    {
+    ) {
         parent::__construct($psrDependencies);
     }
 

@@ -11,10 +11,8 @@ final class Authorization
     public function __construct(
         #[Assert\NotBlank]
         private readonly string $amount,
-
         #[Assert\NotBlank]
         private readonly string $currency,
-
         #[Assert\NotBlank]
         private readonly ?string $sessionId = null
     ) {

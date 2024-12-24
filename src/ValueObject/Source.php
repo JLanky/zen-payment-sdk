@@ -11,16 +11,12 @@ final class Source
     public function __construct(
         #[Assert\NotBlank]
         private readonly string $channel,
-
         #[Assert\NotBlank]
         private readonly ?string $pluginName = null,
-
         #[Assert\NotBlank]
         private readonly ?string $pluginVersion = null,
-
         #[Assert\NotBlank]
         private readonly ?string $platformName = null,
-
         #[Assert\NotBlank]
         private readonly ?string $platformVersion = null
     ) {

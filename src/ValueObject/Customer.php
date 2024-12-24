@@ -11,35 +11,27 @@ final class Customer
     public function __construct(
         #[Assert\NotBlank]
         private readonly string $id,
-
         #[Assert\NotBlank]
         private readonly string $userId,
-
         #[Assert\NotBlank]
         private readonly int $tenantId,
-
         #[Assert\NotBlank]
         private readonly string $firstName,
-
         #[Assert\NotBlank]
         private readonly string $lastName,
-
         #[Assert\NotBlank]
         #[Assert\Email]
         private readonly string $email,
-
         #[Assert\NotBlank]
         private readonly string $phone,
-
         #[Assert\NotBlank]
         private readonly string $information,
-
         #[Assert\NotBlank]
         private readonly string $accountId,
-
         #[Assert\NotBlank]
         private readonly string $ip
-    ) {}
+    ) {
+    }
 
     public function getId(): string
     {

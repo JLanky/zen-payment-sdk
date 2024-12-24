@@ -20,8 +20,7 @@ class CreateTransactionRequestFactory extends AbstractRequestFactory
         private readonly AbstractEnvironment          $environment,
         PsrDependenciesInterface                      $psrDependencies,
         private readonly PrimaryDependenciesInterface $primaryDependencies,
-    )
-    {
+    ) {
         parent::__construct($psrDependencies, $primaryDependencies, $environment);
     }
 
