@@ -38,6 +38,7 @@ class CreateTransactionTest extends ZenFunctionalTestCase
         $this->assertSame(ResponseBodyEnum::StatusAccepted->value, $responseData->getStatus());
         $this->assertSame(ResponseBodyEnum::TypeTrtRefund->value, $responseData->getType());
         $this->assertSame(ResponseBodyEnum::PaymentChannel->value, $responseData->getPaymentChannel());
+        $this->assertSame(ResponseBodyEnum::CustomerEmail->value, $responseData->getPaymentChannel());
     }
 
     public static function getTestData(): array
