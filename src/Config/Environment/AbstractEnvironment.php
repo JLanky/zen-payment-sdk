@@ -6,7 +6,7 @@ namespace JLanky\ZenPayments\Config\Environment;
 
 use JLanky\ZenPayments\Config\Credentials\CredentialsInterface;
 
-abstract class BaseEnvironment implements UrlInterface
+abstract class AbstractEnvironment implements UrlInterface
 {
     public const URL = '';
 
