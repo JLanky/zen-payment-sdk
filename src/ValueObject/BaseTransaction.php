@@ -20,7 +20,9 @@ class BaseTransaction
         #[Assert\NotBlank]
         protected readonly string $amount,
         #[Assert\NotBlank]
-        protected readonly string $currency
+        protected readonly string $currency,
+        #[Assert\NotBlank]
+        protected readonly Customer $customer
     ) {
     }
 
@@ -52,5 +54,10 @@ class BaseTransaction
     public function getCurrency(): string
     {
         return $this->currency;
+    }
+
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
     }
 }
