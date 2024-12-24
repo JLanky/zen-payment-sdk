@@ -2,28 +2,25 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Request\CreateTransaction;
+namespace JLanky\ZenPayments\ValueObject;
 
-use JLanky\ZenPayments\Request\RequestDataInterface;
-use JLanky\ZenPayments\ValueObject\Authorization;
-use JLanky\ZenPayments\ValueObject\Source;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateTransactionRequestData implements RequestDataInterface
+class BaseTransaction
 {
     public function __construct(
         #[Assert\NotBlank]
-        private readonly Authorization $authorization,
+        protected readonly Authorization $authorization,
         #[Assert\NotBlank]
-        private readonly Source $source,
+        protected readonly Source $source,
         #[Assert\NotBlank]
-        private readonly string $merchantTransactionId,
+        protected readonly string $merchantTransactionId,
         #[Assert\NotBlank]
-        private readonly string $paymentChannel,
+        protected readonly string $paymentChannel,
         #[Assert\NotBlank]
-        private readonly string $amount,
+        protected readonly string $amount,
         #[Assert\NotBlank]
-        private readonly string $currency
+        protected readonly string $currency
     ) {
     }
 

@@ -6,8 +6,8 @@ namespace JLanky\ZenPayments\Tests\Integration\CreateTransaction;
 
 use Exception;
 use Faker\Factory;
-use JLanky\ZenPayments\Request\CreateTransaction\CreateTransactionRequestData;
-use JLanky\ZenPayments\Response\CreateTransaction\CreateTransactionResponseData;
+use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestData;
+use JLanky\ZenPayments\Response\Purchase\TransactionResponseData;
 use JLanky\ZenPayments\Service\PurchaseService;
 use JLanky\ZenPayments\Tests\Integration\ZenIntegrationTestCase;
 use JLanky\ZenPayments\ValueObject\Authorization;
@@ -30,7 +30,7 @@ class CreateTransactionTest extends ZenIntegrationTestCase
 
         $responseData = $zenService->createTransaction($createTransactionRequestData);
 
-        $this->assertInstanceOf(CreateTransactionResponseData::class, $responseData);
+        $this->assertInstanceOf(TransactionResponseData::class, $responseData);
     }
 
     public static function getTestData(): array
