@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Tests\Functional\CreateTransaction;
+namespace JLanky\ZenPayments\Tests\Functional\Purchase\CreateTransaction;
 
 use Exception;
 use Faker\Factory;
 use JetBrains\PhpStorm\NoReturn;
-use JLanky\ZenPayments\Request\CreateTransaction\CreateTransactionRequestData;
+use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestData;
 use JLanky\ZenPayments\Tests\Functional\Enum\ResponseBodyEnum;
 use JLanky\ZenPayments\Tests\Functional\ZenFunctionalTestCase;
 use JLanky\ZenPayments\ValueObject\Authorization;
@@ -26,7 +26,7 @@ class CreateTransactionTest extends ZenFunctionalTestCase
     #[NoReturn]
     public function testCreateTransactionSuccessfully(CreateTransactionRequestData $createTransactionRequestData): void
     {
-        $zenService = $this->getZenService(ResponseBodyEnum::CreateTransaction->value);
+        $zenService = $this->getPurchaseService(ResponseBodyEnum::TransactionResponse->value);
 
         $responseData = $zenService->createTransaction($createTransactionRequestData);
 

@@ -6,7 +6,7 @@ namespace JLanky\ZenPayments\Tests\Functional\Enum;
 
 enum ResponseBodyEnum: string
 {
-    case CreateTransaction     = 'CreateTransactionResponse';
+    case TransactionResponse   = 'TransactionResponse';
     case TransactionId         = '497f6eca-6276-4993-bfeb-53cbbbba6f08';
     case MerchantTransactionId = 'string';
     case Amount                = '123.04';
