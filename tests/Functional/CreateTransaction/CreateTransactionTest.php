@@ -26,7 +26,7 @@ class CreateTransactionTest extends ZenFunctionalTestCase
     #[NoReturn]
     public function testCreateTransactionSuccessfully(CreateTransactionRequestData $createTransactionRequestData): void
     {
-        $zenService = $this->getZenService(ResponseBodyEnum::CreateTransaction->value);
+        $zenService = $this->getPurchaseService(ResponseBodyEnum::CreateTransaction->value);
 
         $responseData = $zenService->createTransaction($createTransactionRequestData);
 
