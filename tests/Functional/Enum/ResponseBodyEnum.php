@@ -14,4 +14,5 @@ enum ResponseBodyEnum: string
     case StatusAccepted        = 'ACCEPTED';
     case TypeTrtRefund         = 'TRT_REFUND';
     case PaymentChannel        = 'PCL_CARD';
+    case CustomerEmail         = 'customer@gmail.com';
 }
