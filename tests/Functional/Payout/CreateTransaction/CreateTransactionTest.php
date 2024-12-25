@@ -47,9 +47,9 @@ class CreateTransactionTest extends ZenFunctionalTestCase
         $faker = Factory::create();
 
         $paymentSpecificData = new PaymentSpecificData(
-            '1HB5XDDddDDdDDDj6mfBsbifRoD4miY36v',
-            'partner',
-            'bitbaywithdrawal'
+            payoutBtcAddress: '1HB5XDDddDDdDDDj6mfBsbifRoD4miY36v',
+            feeOwner: 'partner',
+            type: 'bitbaywithdrawal'
         );
 
         $customer = new Customer(email: $faker->email);

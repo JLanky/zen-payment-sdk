@@ -36,7 +36,7 @@ class RefundService extends AbstractService
             $this->primaryDependencies,
         );
 
-        $request = $createRefundTransactionRequestFactory->createRequest($createRefundTransactionRequestData);
+        $request  = $createRefundTransactionRequestFactory->createRequest($createRefundTransactionRequestData);
         $response = $this->sendRequest($request);
 
         $transactionResponseFactory = new TransactionResponseFactory($this->primaryDependencies);
