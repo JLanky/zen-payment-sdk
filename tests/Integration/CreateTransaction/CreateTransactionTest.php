@@ -11,6 +11,7 @@ use JLanky\ZenPayments\Response\TransactionResponseData;
 use JLanky\ZenPayments\Service\PurchaseService;
 use JLanky\ZenPayments\Tests\Integration\ZenIntegrationTestCase;
 use JLanky\ZenPayments\ValueObject\Authorization;
+use JLanky\ZenPayments\ValueObject\Customer;
 use JLanky\ZenPayments\ValueObject\Source;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -46,13 +47,16 @@ class CreateTransactionTest extends ZenIntegrationTestCase
             channel: 'TEST_CHANNEL'
         );
 
+        $customer = new Customer(email: $faker->email);
+
         $createTransactionRequestData = new CreateTransactionRequestData(
             authorization: $authorization,
             source: $source,
             merchantTransactionId: $faker->uuid,
             paymentChannel: 'PCL_CARD',
             amount: (string) $faker->randomFloat(2, 10, 1000),
-            currency: 'USD'
+            currency: 'USD',
+            customer: $customer
         );
 
         return [
