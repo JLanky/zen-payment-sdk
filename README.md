@@ -147,7 +147,7 @@ $paymentSpecificData = new PaymentSpecificData(
 
 $customer = new Customer(email: 'example@gmail.com');
 
-$createTransactionRequestData = new CreatePayoutTransactionRequestData(
+$createPayoutTransactionRequestData = new CreatePayoutTransactionRequestData(
     merchantTransactionId: '8fed8730-3cda-4a84-8735-1a74e20ac007',
     paymentChannel: 'PCL_CARD',
     amount: '1000',
@@ -156,6 +156,6 @@ $createTransactionRequestData = new CreatePayoutTransactionRequestData(
     paymentSpecificData: $paymentSpecificData
 );
 
-$payoutService->createTransaction($getTransactionRequestData)
+$payoutService->createTransaction($createPayoutTransactionRequestData)
 ```
 
