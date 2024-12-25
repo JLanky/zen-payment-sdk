@@ -10,8 +10,9 @@ use JLanky\ZenPayments\Dependency\PrimaryDependencies;
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
 use JLanky\ZenPayments\Dependency\PsrDependencies;
 use JLanky\ZenPayments\Helper\HashHelper;
+use JLanky\ZenPayments\Service\PayoutService;
 use JLanky\ZenPayments\Service\PurchaseService;
-use JLanky\ZenPayments\Tests\Functional\Enum\BodyEnum;
+use JLanky\ZenPayments\Service\RefundService;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -56,6 +57,36 @@ class ZenFunctionalTestCase extends TestCase
     protected function getPurchaseService(string $bodyName): PurchaseService
     {
         return new PurchaseService(
+            new Sandbox(
+                new ZenCredentials('ipnSecret', 'terminalApiKey')
+            ),
+            new PsrDependencies(
+                new Psr17Factory(),
+                new Psr17Factory(),
+                $this->getClient($bodyName)
+            ),
+            $this->getPrimaryDependencies(),
+        );
+    }
+
+    protected function getPayoutService(string $bodyName): PayoutService
+    {
+        return new PayoutService(
+            new Sandbox(
+                new ZenCredentials('ipnSecret', 'terminalApiKey')
+            ),
+            new PsrDependencies(
+                new Psr17Factory(),
+                new Psr17Factory(),
+                $this->getClient($bodyName)
+            ),
+            $this->getPrimaryDependencies(),
+        );
+    }
+
+    protected function getRefundService(string $bodyName): RefundService
+    {
+        return new RefundService(
             new Sandbox(
                 new ZenCredentials('ipnSecret', 'terminalApiKey')
             ),

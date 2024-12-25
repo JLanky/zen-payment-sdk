@@ -7,7 +7,7 @@ namespace JLanky\ZenPayments\Tests\Integration\CreateTransaction;
 use Exception;
 use Faker\Factory;
 use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestData;
-use JLanky\ZenPayments\Response\Purchase\TransactionResponseData;
+use JLanky\ZenPayments\Response\TransactionResponseData;
 use JLanky\ZenPayments\Service\PurchaseService;
 use JLanky\ZenPayments\Tests\Integration\ZenIntegrationTestCase;
 use JLanky\ZenPayments\ValueObject\Authorization;

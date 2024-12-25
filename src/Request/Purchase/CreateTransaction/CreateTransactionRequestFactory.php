@@ -16,34 +16,11 @@ use JLanky\ZenPayments\Request\AbstractRequestFactory;
 
 class CreateTransactionRequestFactory extends AbstractRequestFactory
 {
-    public function __construct(
-        private readonly AbstractEnvironment          $environment,
-        PsrDependenciesInterface                      $psrDependencies,
-        private readonly PrimaryDependenciesInterface $primaryDependencies,
-    ) {
-        parent::__construct($psrDependencies, $primaryDependencies, $environment);
-    }
-
     public const PATH = 'transactions';
 
-    /**
-     * @return AbstractRequestModifier[]
-     * @throws Exception
-     */
+    /** @throws Exception */
     protected function getModifiers(): array
     {
-        $requestId = $this->primaryDependencies
-            ->getHashHelper()
-            ->generateRequestId();
-
-        $token = $this->environment
-            ->getCredentials()
-            ->getTerminalApiKey();
-
-        return [
-            new ContentTypeJsonRequestModifier(),
-            new RequestIdRequestModifier($requestId),
-            new BearerTokenRequestModifier($token)
-        ];
+        return $this->getDefaultModifiers();
     }
 }

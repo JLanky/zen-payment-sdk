@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Response\Purchase;
+namespace JLanky\ZenPayments\Response;
 
-use JLanky\ZenPayments\Response\ResponseDataInterface;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 class TransactionResponseData implements ResponseDataInterface

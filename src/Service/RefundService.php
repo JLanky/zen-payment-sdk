@@ -7,14 +7,14 @@ namespace JLanky\ZenPayments\Service;
 use JLanky\ZenPayments\Config\Environment\AbstractEnvironment;
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
 use JLanky\ZenPayments\Dependency\PsrDependenciesInterface;
-use JLanky\ZenPayments\Request\Payout\CreateTransaction\CreatePayoutTransactionRequestData;
-use JLanky\ZenPayments\Request\Payout\CreateTransaction\CreatePayoutTransactionRequestFactory;
+use JLanky\ZenPayments\Request\Refund\CreateRefundTransactionRequestData;
+use JLanky\ZenPayments\Request\Refund\CreateRefundTransactionRequestFactory;
 use JLanky\ZenPayments\Response\TransactionResponseData;
 use JLanky\ZenPayments\Response\TransactionResponseFactory;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class PayoutService extends AbstractService
+class RefundService extends AbstractService
 {
     public function __construct(
         private readonly AbstractEnvironment          $environment,
@@ -25,18 +25,18 @@ class PayoutService extends AbstractService
     }
 
     /**
-     * @throws JsonException
      * @throws ClientExceptionInterface
+     * @throws JsonException
      */
-    public function createTransaction(CreatePayoutTransactionRequestData $createPayoutTransactionRequestData): TransactionResponseData
+    public function createTransaction(CreateRefundTransactionRequestData $createRefundTransactionRequestData): TransactionResponseData
     {
-        $createTransactionRequestFactory = new CreatePayoutTransactionRequestFactory(
+        $createRefundTransactionRequestFactory = new CreateRefundTransactionRequestFactory(
             $this->environment,
             $this->psrDependencies,
             $this->primaryDependencies,
         );
 
-        $request  = $createTransactionRequestFactory->createRequest($createPayoutTransactionRequestData);
+        $request = $createRefundTransactionRequestFactory->createRequest($createRefundTransactionRequestData);
         $response = $this->sendRequest($request);
 
         $transactionResponseFactory = new TransactionResponseFactory($this->primaryDependencies);
