@@ -71,6 +71,36 @@ class ZenFunctionalTestCase extends TestCase
         );
     }
 
+    protected function getPayoutService(string $bodyName): PayoutService
+    {
+        return new PayoutService(
+            new Sandbox(
+                new ZenCredentials('ipnSecret', 'terminalApiKey')
+            ),
+            new PsrDependencies(
+                new Psr17Factory(),
+                new Psr17Factory(),
+                $this->getClient($bodyName)
+            ),
+            $this->getPrimaryDependencies(),
+        );
+    }
+
+    protected function getRefundService(string $bodyName): RefundService
+    {
+        return new RefundService(
+            new Sandbox(
+                new ZenCredentials('ipnSecret', 'terminalApiKey')
+            ),
+            new PsrDependencies(
+                new Psr17Factory(),
+                new Psr17Factory(),
+                $this->getClient($bodyName)
+            ),
+            $this->getPrimaryDependencies(),
+        );
+    }
+
     private function getClient(string $bodyName): ClientInterface
     {
         $client = $this->getMockBuilder(ClientInterface::class)->getMock();
