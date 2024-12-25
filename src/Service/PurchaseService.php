@@ -11,8 +11,8 @@ use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionReque
 use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestFactory;
 use JLanky\ZenPayments\Request\Purchase\GetTransaction\GetTransactionRequestData;
 use JLanky\ZenPayments\Request\Purchase\GetTransaction\GetTransactionRequestFactory;
-use JLanky\ZenPayments\Response\Purchase\TransactionResponseData;
-use JLanky\ZenPayments\Response\Purchase\TransactionResponseFactory;
+use JLanky\ZenPayments\Response\TransactionResponseData;
+use JLanky\ZenPayments\Response\TransactionResponseFactory;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace JLanky\ZenPayments\Request;
 
+use Exception;
 use JLanky\ZenPayments\Config\Environment\AbstractEnvironment;
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
 use JLanky\ZenPayments\Dependency\PsrDependenciesInterface;
 use JLanky\ZenPayments\Modifier\AbstractRequestModifier;
+use JLanky\ZenPayments\Modifier\BearerTokenRequestModifier;
+use JLanky\ZenPayments\Modifier\ContentTypeJsonRequestModifier;
+use JLanky\ZenPayments\Modifier\RequestIdRequestModifier;
 use JsonException;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
@@ -18,14 +22,35 @@ abstract class AbstractRequestFactory
     public const METHOD = 'POST';
 
     public function __construct(
+        private readonly AbstractEnvironment          $environment,
         private readonly PsrDependenciesInterface     $psrDependencies,
         private readonly PrimaryDependenciesInterface $primaryDependencies,
-        private readonly AbstractEnvironment          $environment,
     ) {
     }
 
     /** @return AbstractRequestModifier[] */
     abstract protected function getModifiers(): array;
+
+    /**
+     * @return AbstractRequestModifier[]
+     * @throws Exception
+     */
+    protected function getDefaultModifiers(): array
+    {
+        $requestId = $this->primaryDependencies
+            ->getHashHelper()
+            ->generateRequestId();
+
+        $token = $this->environment
+            ->getCredentials()
+            ->getTerminalApiKey();
+
+        return [
+            new ContentTypeJsonRequestModifier(),
+            new RequestIdRequestModifier($requestId),
+            new BearerTokenRequestModifier($token)
+        ];
+    }
 
     protected function getPath(RequestDataInterface $requestData): string
     {

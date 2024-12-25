@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Request\Payout\CreateTransaction;
+namespace JLanky\ZenPayments\Request\Refund;
 
 use Exception;
 use JLanky\ZenPayments\Request\AbstractRequestFactory;
 
-class CreatePayoutTransactionRequestFactory extends AbstractRequestFactory
+class CreateRefundTransactionRequestFactory extends AbstractRequestFactory
 {
-    public const PATH = 'payouts';
+    public const PATH = 'transactions/refund';
 
     /** @throws Exception */
     protected function getModifiers(): array
