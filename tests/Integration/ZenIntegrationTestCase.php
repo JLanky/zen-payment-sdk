@@ -6,7 +6,9 @@ namespace JLanky\ZenPayments\Tests\Integration;
 
 use Exception;
 use JLanky\ZenPayments\Config\Credentials\ZenCredentials;
-use JLanky\ZenPayments\Config\Environment\Sandbox;
+use JLanky\ZenPayments\Config\Environment\SandboxEnvironment;
+use JLanky\ZenPayments\Dependency\Factories\SerializerFactory;
+use JLanky\ZenPayments\Dependency\Factories\ValidatorFactory;
 use JLanky\ZenPayments\Dependency\PrimaryDependencies;
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
 use JLanky\ZenPayments\Dependency\PsrDependencies;
@@ -22,15 +24,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpClient\Psr18Client;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
-use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
-use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Validation;
 
 class ZenIntegrationTestCase extends TestCase
 {
@@ -57,11 +50,11 @@ class ZenIntegrationTestCase extends TestCase
             ->addArgument($_ENV['IPN_SECRET'])
             ->addArgument($_ENV['TERMINAL_API_KEY']);
 
-        $container->register(Sandbox::class, Sandbox::class)
+        $container->register(SandboxEnvironment::class, SandboxEnvironment::class)
             ->addArgument(new Reference(ZenCredentials::class));
 
         $container->register(PurchaseService::class, PurchaseService::class)
-            ->addArgument(new Reference(Sandbox::class))
+            ->addArgument(new Reference(SandboxEnvironment::class))
             ->addArgument(new Reference(PsrDependenciesInterface::class))
             ->addArgument(new Reference(PrimaryDependenciesInterface::class));
 
@@ -70,27 +63,6 @@ class ZenIntegrationTestCase extends TestCase
 
     private function getPrimaryDependencies(): PrimaryDependenciesInterface
     {
-        $validator = Validation::createValidatorBuilder()
-            ->enableAttributeMapping()
-            ->getValidator();
-
-        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
-
-        $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
-
-        $serializer = new Serializer(
-            [
-                new ObjectNormalizer(
-                    $classMetadataFactory,
-                    $metadataAwareNameConverter,
-                    null,
-                    new ReflectionExtractor()
-                ),
-                new ArrayDenormalizer(),
-            ],
-            [new JsonEncoder(),]
-        );
-
-        return new PrimaryDependencies($validator, $serializer, new HashHelper());
+        return new PrimaryDependencies(new ValidatorFactory(), new SerializerFactory(), new HashHelper());
     }
 }
