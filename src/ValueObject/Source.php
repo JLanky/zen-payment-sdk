@@ -27,22 +27,22 @@ final class Source
         return $this->channel;
     }
 
-    public function getPluginName(): string
+    public function getPluginName(): ?string
     {
         return $this->pluginName;
     }
 
-    public function getPluginVersion(): string
+    public function getPluginVersion(): ?string
     {
         return $this->pluginVersion;
     }
 
-    public function getPlatformName(): string
+    public function getPlatformName(): ?string
     {
         return $this->platformName;
     }
 
-    public function getPlatformVersion(): string
+    public function getPlatformVersion(): ?string
     {
         return $this->platformVersion;
     }

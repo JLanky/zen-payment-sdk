@@ -38,47 +38,47 @@ final class Customer
         return $this->id;
     }
 
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
-
-    public function getTenantId(): int
-    {
-        return $this->tenantId;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPhone(): string
+    public function getUserId(): ?string
+    {
+        return $this->userId;
+    }
+
+    public function getTenantId(): ?int
+    {
+        return $this->tenantId;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    public function getInformation(): string
+    public function getInformation(): ?string
     {
         return $this->information;
     }
 
-    public function getAccountId(): string
+    public function getAccountId(): ?string
     {
         return $this->accountId;
     }
 
-    public function getIp(): string
+    public function getIp(): ?string
     {
         return $this->ip;
     }
