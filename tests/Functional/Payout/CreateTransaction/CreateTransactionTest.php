@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Tests\Functional\Purchase\CreateTransaction;
+namespace JLanky\ZenPayments\Tests\Functional\Payout\CreateTransaction;
 
 use Exception;
 use Faker\Factory;
 use JetBrains\PhpStorm\NoReturn;
+use JLanky\ZenPayments\Request\Payout\CreateTransaction\CreatePayoutTransactionRequestData;
 use JLanky\ZenPayments\Request\Purchase\CreateTransaction\CreateTransactionRequestData;
 use JLanky\ZenPayments\Tests\Functional\Enum\ResponseBodyEnum;
 use JLanky\ZenPayments\Tests\Functional\ZenFunctionalTestCase;
 use JLanky\ZenPayments\ValueObject\Authorization;
 use JLanky\ZenPayments\ValueObject\Customer;
+use JLanky\ZenPayments\ValueObject\PaymentSpecificData;
 use JLanky\ZenPayments\ValueObject\Source;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -25,11 +27,11 @@ class CreateTransactionTest extends ZenFunctionalTestCase
      * @throws ClientExceptionInterface
      */
     #[NoReturn]
-    public function testCreateTransactionSuccessfully(CreateTransactionRequestData $createTransactionRequestData): void
+    public function testCreatePayoutTransactionSuccessfully(CreatePayoutTransactionRequestData $createPayoutTransactionRequestData): void
     {
-        $purchaseService = $this->getPurchaseService(ResponseBodyEnum::TransactionResponse->value);
+        $payoutService = $this->getPayoutService(ResponseBodyEnum::TransactionResponse->value);
 
-        $responseData = $purchaseService->createTransaction($createTransactionRequestData);
+        $responseData = $payoutService->createTransaction($createPayoutTransactionRequestData);
 
         $this->assertSame(ResponseBodyEnum::TransactionId->value, $responseData->getId());
         $this->assertSame(ResponseBodyEnum::MerchantTransactionId->value, $responseData->getMerchantTransactionId());
@@ -44,25 +46,21 @@ class CreateTransactionTest extends ZenFunctionalTestCase
     {
         $faker = Factory::create();
 
-        $authorization = new Authorization(
-            amount: (string) $faker->randomFloat(2, 10, 1000),
-            currency: 'EUR'
-        );
-
-        $source = new Source(
-            channel: 'TEST_CHANNEL'
+        $paymentSpecificData = new PaymentSpecificData(
+            payoutBtcAddress: '1HB5XDDddDDdDDDj6mfBsbifRoD4miY36v',
+            feeOwner: 'partner',
+            type: 'bitbaywithdrawal'
         );
 
         $customer = new Customer(email: $faker->email);
 
-        $createTransactionRequestData = new CreateTransactionRequestData(
-            authorization: $authorization,
-            source: $source,
+        $createTransactionRequestData = new CreatePayoutTransactionRequestData(
             merchantTransactionId: $faker->uuid,
             paymentChannel: 'PCL_CARD',
             amount: (string) $faker->randomFloat(2, 10, 1000),
             currency: 'EUR',
-            customer: $customer
+            customer: $customer,
+            paymentSpecificData: $paymentSpecificData
         );
 
         return [

@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JLanky\ZenPayments\Response\Purchase;
+namespace JLanky\ZenPayments\Response;
 
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
-use JLanky\ZenPayments\Response\AbstractResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 
 class TransactionResponseFactory extends AbstractResponseFactory
