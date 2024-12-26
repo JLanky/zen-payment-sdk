@@ -18,8 +18,8 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 abstract class AbstractRequestFactory
 {
-    public const PATH   = '';
-    public const METHOD = 'POST';
+    const PATH = '';
+    const METHOD = 'POST';
 
     public function __construct(
         private readonly AbstractEnvironment          $environment,
