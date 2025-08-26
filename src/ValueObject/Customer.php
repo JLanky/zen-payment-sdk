@@ -4,31 +4,37 @@ declare(strict_types=1);
 
 namespace JLanky\ZenPayments\ValueObject;
 
+use JLanky\ZenPayments\Enum\ValidationErrorMessages;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class Customer
 {
     public function __construct(
         #[Assert\NotBlank]
-        #[Assert\Email]
+        #[Assert\Email(message: ValidationErrorMessages::INVALID_EMAIL)]
         private readonly string  $email,
-        #[Assert\NotBlank]
+        #[Assert\Length(min: 1, max: 255)]
+        #[Assert\Regex(pattern: '/^[a-zA-Z0-9_-]+$/', message: ValidationErrorMessages::CUSTOMER_ID_INVALID)]
         private readonly ?string $id = null,
-        #[Assert\NotBlank]
+        #[Assert\Length(min: 1, max: 255)]
+        #[Assert\Regex(pattern: '/^[a-zA-Z0-9_-]+$/', message: ValidationErrorMessages::USER_ID_INVALID)]
         private readonly ?string  $userId = null,
-        #[Assert\NotBlank]
+        #[Assert\Positive(message: ValidationErrorMessages::TENANT_ID_MUST_BE_POSITIVE)]
         private readonly ?int     $tenantId = null,
-        #[Assert\NotBlank]
+        #[Assert\Length(min: 1, max: 100)]
+        #[Assert\Regex(pattern: '/^[a-zA-Z\s]+$/', message: ValidationErrorMessages::FIRST_NAME_INVALID)]
         private readonly ?string  $firstName = null,
-        #[Assert\NotBlank]
+        #[Assert\Length(min: 1, max: 100)]
+        #[Assert\Regex(pattern: '/^[a-zA-Z\s]+$/', message: ValidationErrorMessages::LAST_NAME_INVALID)]
         private readonly ?string  $lastName = null,
-        #[Assert\NotBlank]
+        #[Assert\Regex(pattern: '/^\+?[1-9]\d{1,14}$/', message: ValidationErrorMessages::INVALID_PHONE)]
         private readonly ?string  $phone = null,
-        #[Assert\NotBlank]
+        #[Assert\Length(max: 1000)]
         private readonly ?string $information = null,
-        #[Assert\NotBlank]
+        #[Assert\Length(min: 1, max: 255)]
+        #[Assert\Regex(pattern: '/^[a-zA-Z0-9_-]+$/', message: ValidationErrorMessages::ACCOUNT_ID_INVALID)]
         private readonly ?string $accountId = null,
-        #[Assert\NotBlank]
+        #[Assert\Ip(message: ValidationErrorMessages::INVALID_IP)]
         private readonly ?string $ip = null
     ) {
     }
