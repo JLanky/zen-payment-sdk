@@ -9,9 +9,11 @@ use JLanky\ZenPayments\Config\Environment\AbstractEnvironment;
 use JLanky\ZenPayments\Dependency\PrimaryDependenciesInterface;
 use JLanky\ZenPayments\Dependency\PsrDependenciesInterface;
 use JLanky\ZenPayments\Modifier\AbstractRequestModifier;
-use JLanky\ZenPayments\Modifier\BearerTokenRequestModifier;
 use JLanky\ZenPayments\Modifier\ContentTypeJsonRequestModifier;
-use JLanky\ZenPayments\Modifier\RequestIdRequestModifier;
+use JLanky\ZenPayments\Modifier\RequestModifierInterface;
+use JLanky\ZenPayments\Request\Modifier\CredentialsTokenProvider;
+use JLanky\ZenPayments\Request\Modifier\DefaultModifiersFactory;
+use JLanky\ZenPayments\Request\Modifier\HashHelperRequestIdProvider;
 use JsonException;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
@@ -21,35 +23,45 @@ abstract class AbstractRequestFactory
     const PATH = '';
     const METHOD = 'POST';
 
+    private ?DefaultModifiersFactory $defaultModifiersFactory = null;
+
     public function __construct(
         private readonly AbstractEnvironment          $environment,
         private readonly PsrDependenciesInterface     $psrDependencies,
         private readonly PrimaryDependenciesInterface $primaryDependencies,
+        ?DefaultModifiersFactory $defaultModifiersFactory = null
     ) {
+        $this->defaultModifiersFactory = $defaultModifiersFactory;
     }
 
     /** @return AbstractRequestModifier[] */
     abstract protected function getModifiers(): array;
 
     /**
-     * @return AbstractRequestModifier[]
-     * @throws Exception
+     * Get default request modifiers using the factory.
+     *
+     * @return RequestModifierInterface[]
      */
     protected function getDefaultModifiers(): array
     {
-        $requestId = $this->primaryDependencies
-            ->getHashHelper()
-            ->generateRequestId();
+        return $this->getDefaultModifiersFactory()
+            ->create();
+    }
 
-        $token = $this->environment
-            ->getCredentials()
-            ->getTerminalApiKey();
+    /**
+     * Get the default modifiers factory instance (lazy loading).
+     */
+    private function getDefaultModifiersFactory(): DefaultModifiersFactory
+    {
+        if ($this->defaultModifiersFactory === null) {
+            $this->defaultModifiersFactory = new DefaultModifiersFactory(
+                new HashHelperRequestIdProvider($this->primaryDependencies->getHashHelper()),
+                new CredentialsTokenProvider($this->environment),
+                new ContentTypeJsonRequestModifier()
+            );
+        }
 
-        return [
-            new ContentTypeJsonRequestModifier(),
-            new RequestIdRequestModifier($requestId),
-            new BearerTokenRequestModifier($token)
-        ];
+        return $this->defaultModifiersFactory;
     }
 
     protected function getPath(RequestDataInterface $requestData): string
